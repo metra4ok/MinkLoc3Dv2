@@ -42,6 +42,7 @@ RUN conda install -y \
         tensorboard \
         wandb \
         pandas \
+        opencv \
         -c metric-learning -c pytorch -c conda-forge
 
 # some requirements are not available in conda
