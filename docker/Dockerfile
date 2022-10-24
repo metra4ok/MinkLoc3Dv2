@@ -19,6 +19,9 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     libopenblas-dev \
     wget \
     git \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --upgrade pip setuptools
@@ -42,7 +45,7 @@ RUN conda install -y \
         -c metric-learning -c pytorch -c conda-forge
 
 # some requirements are not available in conda
-RUN pip install colour-demosaicing
+RUN pip install colour-demosaicing open3d pypotree
 
 # add user and his password
 ARG USER=docker_minkloc3d

@@ -1,5 +1,5 @@
 [DEFAULT]
-dataset_folder = /data3/pointnetvlad/benchmark_datasets
+dataset_folder = /home/docker_minkloc3d/Datasets/RobotCar_pointnetvlad_sample
 
 [TRAIN]
 num_workers = 8

@@ -6,6 +6,7 @@ from typing import Dict
 import torch
 import numpy as np
 from torch.utils.data import Dataset
+import open3d as o3d
 
 
 class TrainingTuple:
@@ -156,3 +157,30 @@ class PointCloudLoader:
     def read_pc(self, file_pathname: str) -> np.ndarray:
         # Reads the point cloud without pre-processing
         raise NotImplementedError("read_pc must be overloaded in an inheriting class")
+
+
+def read_pc(file_pathname: str, ext: str = 'pcd') -> np.ndarray:
+    # Reads the point cloud without pre-processing
+    # Returns Nx3 ndarray
+    if ext == 'pcd':
+        pcd = o3d.io.read_point_cloud(file_pathname)
+        pc = np.asarray(pcd.points)
+    elif ext == 'bin':
+        file_path = os.path.join(file_pathname)
+        pc = np.fromfile(file_path, dtype=np.float64)
+        pc = np.float32(pc)
+        # coords are within -1..1 range in each dimension
+        pc = np.reshape(pc, (pc.shape[0] // 3, 3))
+    else:
+        raise NotImplementedError(f"The point cloud extention {ext} is not supported")
+    return pc
+
+    
+def normalize_pc(points):
+	# centroid = np.mean(points, axis=0)
+	# points -= centroid
+    # ^ keep [0, 0, 0] as the lidar sensor coordinate 
+	furthest_distance = np.max(np.sqrt(np.sum(points**2,axis=-1)))
+	points /= furthest_distance
+
+	return points
