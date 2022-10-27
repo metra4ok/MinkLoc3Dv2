@@ -60,5 +60,6 @@ WORKDIR /home/${USER}
 
 RUN mkdir MinkLoc3Dv2 && chown -R ${UID}:${GID} /home/${USER}
 RUN mkdir Datasets && chown -R ${UID}:${GID} /home/${USER}
+RUN mkdir Experiments && chown -R ${UID}:${GID} /home/${USER}
 
 USER ${UID}:${GID}
